@@ -1,6 +1,8 @@
 import 'regenerator-runtime/runtime';
 import * as React from 'react';
 import { render } from 'react-dom';
+import { Provider } from 'react-redux';
+import { store } from './redux/store/index';
 import App from './app/App';
 
 if (module.hot) {
@@ -8,4 +10,9 @@ if (module.hot) {
 }
 
 /* eslint-disable no-undef */
-render(<App />, document.getElementById('root'));
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root'),
+);
