@@ -12,8 +12,14 @@ function PokemonCard() {
   return (
     <div>
       <Card>
-       <CardActionArea>
-       </CardActionArea>
+        <CardActionArea>
+          <div>
+            <CardMedia>
+              <img />
+            </CardMedia>
+            <Typography>Ime</Typography>
+          </div>
+        </CardActionArea>
       </Card>
     </div>
   );

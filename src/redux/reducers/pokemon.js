@@ -10,6 +10,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
       };
+    case FETCH_BY_POKEMONS_SUCCESS:
+      return {
+        ...state,
+        pokemonsData: action.payload.pokemonsData,
+      };
     default:
       return state;
   }
