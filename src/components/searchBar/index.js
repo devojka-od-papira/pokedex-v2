@@ -3,7 +3,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { alpha, makeStyles } from '@material-ui/core/styles';
 import { Icon } from '@iconify/react';
 import pokeballIcon from '@iconify/icons-mdi/pokeball';
 import { Button } from '@material-ui/core';
@@ -12,11 +12,11 @@ const useStyles = makeStyles((theme) => ({
   search: {
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.2),
+    backgroundColor: alpha(theme.palette.common.white, 0.2),
     display: 'flex',
     alignItems: 'center',
     '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.3),
+      backgroundColor: alpha(theme.palette.common.white, 0.3),
     },
   },
   title: {
