@@ -7,14 +7,17 @@ import SearchBar from '../../components/searchBar';
 import { fetchPokemons } from '../../redux/actions';
 
 const useStyles = makeStyles({
-  wrap: {
+  conteiner: {
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'center',
+
   },
 });
 
-function Home({ fetchPokemonsAction, pokemonsData }) {
+function Home({
+  fetchPokemonsAction, pokemonsData,
+}) {
   const classes = useStyles();
   useEffect(() => {
     fetchPokemonsAction();
@@ -23,13 +26,14 @@ function Home({ fetchPokemonsAction, pokemonsData }) {
   return (
     <div>
       <SearchBar />
-      <div className={classes.wrap}>
+      <div className={classes.conteiner}>
         {pokemonsData.map((pokemon) => (
           <PokemonCard
             key={pokemon.name}
             pokemonsData={pokemonsData}
             name={pokemon.name}
             url={pokemon.url}
+            // single={!!pokemon.id}
           />
         ))}
       </div>
