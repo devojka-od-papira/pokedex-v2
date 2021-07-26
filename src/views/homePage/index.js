@@ -19,6 +19,7 @@ function Home({
   fetchPokemonsAction, pokemonsData,
 }) {
   const classes = useStyles();
+
   useEffect(() => {
     fetchPokemonsAction();
   }, []);
@@ -33,7 +34,6 @@ function Home({
             pokemonsData={pokemonsData}
             name={pokemon.name}
             url={pokemon.url}
-            // single={!!pokemon.id}
           />
         ))}
       </div>

@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import Card from '@material-ui/core/Card';
+import { Link, useLocation } from 'react-router-dom';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import { CardMedia, Button } from '@material-ui/core';
+import { CardMedia, Typography, Card } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import Chip from '@material-ui/core/Chip';
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import { fetchPokemon } from '../../services/pokemon';
+import { capitalize } from '../../utils';
 
 const useStyles = makeStyles({
   wrap: {
-    padding: 20,
     margin: 30,
   },
   areaCard: {
@@ -62,20 +59,27 @@ const useStyles = makeStyles({
   },
 });
 
-function PokemonCard({ name, url }) {
+function PokemonCard({ name, url, pokemonDetail }) {
   const classes = useStyles();
+  const location = useLocation();
+  console.log('location', location);
+
   const [pokemon, setPokemon] = useState(null);
+  console.log('pokemon', pokemon);
+  console.log('pokemondetail', pokemonDetail);
   const [hoverStatus, setHoverStatus] = useState(false);
 
   useEffect(() => {
-    fetchPokemon(url).then((res) => {
-      setPokemon(res);
-    });
+    if (location.pathname === '/') {
+      fetchPokemon(url).then((res) => {
+        setPokemon(res);
+      });
+    } else {
+      console.log('uzmi podatke iz redu..');
+      setPokemon(pokemonDetail);
+    }
   }, []);
 
-  function capitalize(string) {
-    return string && string[0].toUpperCase() + string.slice(1);
-  }
   const chipColor = (type) => {
     if (type === 'normal') {
       return '#a3a375';
@@ -129,85 +133,65 @@ function PokemonCard({ name, url }) {
     }
     return '';
   };
-  console.log('pokemonL', pokemon);
-
-  const activeStatus = () => {
-    setHoverStatus(true);
-  };
-  const notActivStatus = () => {
-    setHoverStatus(!true);
-  };
 
   return pokemon ? (
     <>
-      <Card onMouseEnter={activeStatus} onMouseLeave={notActivStatus} className={classes.wrap}>
-        <CardActionArea className={classes.areaCard}>
-          <div>
-            <Typography className={classes.name}>{capitalize(name)}</Typography>
-            <CardMedia className={classes.image}>
-              <img src={pokemon?.sprites?.front_shiny} alt="pokemon" />
-            </CardMedia>
+      <Link to={`/detail/${pokemon.id}`}>
+        <Card className={classes.wrap}>
+          <CardActionArea className={classes.areaCard}>
             <div>
-              <div className={classes.chip}>
-                <p className={classes.parag}>
-                  Type :
-                </p>
-                {pokemon?.types.map((type) => {
-                  const color = chipColor(type.type.name);
-                  return (
-                    <div>
-                      <Chip
-                        style={{ backgroundColor: color, margin: 4 }}
-                        variant="outlined"
-                        size="small"
-                        label={capitalize(type.type.name)}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-
-              <div className={classes.chip}>
-                <p className={classes.parag}>
-                  Weight :
-                </p>
-                <Chip
-                  style={{ backgroundColor: '#e0ebeb' }}
-                  variant="outlined"
-                  size="small"
-                  label={`${Math.round(pokemon?.weight * 0.1)} kg`}
-                />
-              </div>
-              <div className={classes.chip}>
-                <p className={classes.parag}>
-                  Height :
-                </p>
-                <Chip
-                  style={{ backgroundColor: '#e0ebeb' }}
-                  variant="outlined"
-                  size="small"
-                  label={`${pokemon?.height * 10} cm`}
-                />
-
-              </div>
+              <Typography className={classes.name}>{capitalize(name)}</Typography>
+              <CardMedia className={classes.image}>
+                <img src={pokemon?.sprites?.front_shiny} alt="pokemon" />
+              </CardMedia>
               <div>
-                <Link to={`/detail/${pokemon.id}`}>
-                  {hoverStatus && (
-                  <Button
-                    className={classes.button}
-                    size="small"
+                <div className={classes.chip}>
+                  <p className={classes.parag}>
+                    Type :
+                  </p>
+                  {pokemon?.types.map((type) => {
+                    const color = chipColor(type.type.name);
+                    return (
+                      <div key={type.type.name}>
+                        <Chip
+                          style={{ backgroundColor: color, margin: 4 }}
+                          variant="outlined"
+                          size="small"
+                          label={capitalize(type.type.name)}
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <div className={classes.chip}>
+                  <p className={classes.parag}>
+                    Weight :
+                  </p>
+                  <Chip
+                    style={{ backgroundColor: '#e0ebeb' }}
                     variant="outlined"
-                    endIcon={<ArrowRightIcon />}
-                  >
-                    Detail
-                  </Button>
-                  ) }
-                </Link>
+                    size="small"
+                    label={`${Math.round(pokemon?.weight * 0.1)} kg`}
+                  />
+                </div>
+                <div className={classes.chip}>
+                  <p className={classes.parag}>
+                    Height :
+                  </p>
+                  <Chip
+                    style={{ backgroundColor: '#e0ebeb' }}
+                    variant="outlined"
+                    size="small"
+                    label={`${pokemon?.height * 10} cm`}
+                  />
+                </div>
               </div>
             </div>
-          </div>
-        </CardActionArea>
-      </Card>
+          </CardActionArea>
+        </Card>
+      </Link>
+
     </>
   ) : null;
 }
