@@ -7,7 +7,7 @@ import {
 const initialState = {
   pokemonsData: [],
   pokemonDetail: null,
-// satla sam ovde
+  pokemonDetailLoading: false,
 };
 
 export default (state = initialState, action) => {
@@ -24,11 +24,13 @@ export default (state = initialState, action) => {
     case FETCH_POKEMON_DETAIL_REQEST:
       return {
         ...state,
+        pokemonDetailLoading: true,
       };
     case FETCH_POKEMON_DETAIL_SUCCESS:
       return {
         ...state,
         pokemonDetail: action.payload.pokemonDetail,
+        pokemonDetailLoading: false,
       };
     default:
       return state;

@@ -7,6 +7,7 @@ import {
   FETCH_POKEMON_DETAIL_SUCCESS,
   FETCH_POKEMON_DETAIL_ERROR,
 } from '../actionTypes';
+import { capitalize } from '../../utils';
 
 export const fetchPokemons = () => async (dispatch) => {
   dispatch({ type: FETCH_POKEMONS_REQEST });
@@ -31,10 +32,21 @@ export const fetchPokemonDetailAction = (id) => async (dispatch) => {
 
   try {
     const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
+
+    const newStats = data.stats.map((value) => ({
+      ...value,
+      id: capitalize(value.stat.name),
+      label: capitalize(value.stat.name),
+      value: value.base_stat,
+      color: 'hsl(115, 70%, 50%)',
+    }));
+
+    const newData = { ...data, stats: newStats };
+
     dispatch({
       type: FETCH_POKEMON_DETAIL_SUCCESS,
       payload: {
-        pokemonDetail: data,
+        pokemonDetail: newData,
       },
     });
   } catch (error) {
