@@ -17,7 +17,7 @@ const useStyles = makeStyles({
 
 });
 
-const PokemonStats = ({ stats }) => {
+const PokemonStats = ({ stats = [] }) => {
   const classes = useStyles();
   console.log('stats', stats);
   return (

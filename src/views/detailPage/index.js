@@ -39,12 +39,12 @@ const useStyles = makeStyles({
 function Detail({ fetchPokemonDetail, pokemonDetail }) {
   const classes = useStyles();
   const { id } = useParams();
+
   useEffect(() => {
     if (id) {
       fetchPokemonDetail(id);
     }
   }, []);
-  console.log('pokem', pokemonDetail);
 
   return (
     <>
@@ -66,6 +66,7 @@ function Detail({ fetchPokemonDetail, pokemonDetail }) {
                 <TableCell align="right">Weight [ kg ]</TableCell>
                 <TableCell align="right">Height [ cm ]</TableCell>
                 <TableCell align="right">Abilities</TableCell>
+                <TableCell align="right">Types</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -79,7 +80,12 @@ function Detail({ fetchPokemonDetail, pokemonDetail }) {
                   <p key={ability.ability.name}>{capitalize(ability.ability.name)}</p>
                 ))}
               </TableCell>
-              <TableCell />
+              <TableCell align="right">
+                {pokemonDetail?.types.map((type) => (
+                  <p>{capitalize(type.type.name)}</p>
+                ))}
+
+              </TableCell>
             </TableBody>
           </Table>
         </TableContainer>

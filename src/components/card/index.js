@@ -4,6 +4,10 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import { CardMedia, Typography, Card } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Chip from '@material-ui/core/Chip';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faTint, faGhost, faBolt, faFire, faHandRock,
+} from '@fortawesome/free-solid-svg-icons';
 import { fetchPokemon } from '../../services/pokemon';
 import { capitalize } from '../../utils';
 
@@ -59,49 +63,60 @@ const useStyles = makeStyles({
   },
 });
 
-function PokemonCard({ name, url, pokemonDetail }) {
+function PokemonCard({ name, url }) {
   const classes = useStyles();
-  const location = useLocation();
-  console.log('location', location);
 
   const [pokemon, setPokemon] = useState(null);
-  console.log('pokemon', pokemon);
-  console.log('pokemondetail', pokemonDetail);
-  const [hoverStatus, setHoverStatus] = useState(false);
 
   useEffect(() => {
-    if (location.pathname === '/') {
-      fetchPokemon(url).then((res) => {
-        setPokemon(res);
-      });
-    } else {
-      console.log('uzmi podatke iz redu..');
-      setPokemon(pokemonDetail);
-    }
+    fetchPokemon(url).then((res) => {
+      setPokemon(res);
+    });
   }, []);
 
   const chipColor = (type) => {
     if (type === 'normal') {
-      return '#a3a375';
+      return {
+        color: '#a3a375',
+        icon: <FontAwesomeIcon icon={faGhost} />,
+      };
     } if (type === 'water') {
-      return '#668cff';
+      return {
+        color: '#668cff',
+        icon: <FontAwesomeIcon icon={faTint} />,
+      };
     } if (type === 'electric') {
-      return '#ffdb4d';
+      return {
+        color: '#ffdb4d',
+        icon: <FontAwesomeIcon icon={faBolt} />,
+      };
     }
     if (type === 'fire') {
-      return '#ff9933';
+      return {
+        color: '#ff9933',
+        icon: <FontAwesomeIcon icon={faFire} />,
+      };
     }
     if (type === 'fighting') {
-      return '#ff1a1a';
+      return {
+        color: '#ff1a1a',
+        icon: <FontAwesomeIcon icon={faHandRock} />,
+      };
     }
     if (type === 'flying') {
-      return '#d9b3ff';
+      return {
+        color: '#d9b3ff',
+      };
     }
     if (type === 'grass') {
-      return '#33ff33';
+      return {
+        color: '#33ff33',
+      };
     }
     if (type === 'poison') {
-      return '#9900cc';
+      return {
+        color: '#9900cc',
+      };
     }
     if (type === 'ground') {
       return '#996600';
@@ -150,14 +165,15 @@ function PokemonCard({ name, url, pokemonDetail }) {
                     Type :
                   </p>
                   {pokemon?.types.map((type) => {
-                    const color = chipColor(type.type.name);
+                    const { color, icon } = chipColor(type.type.name);
                     return (
                       <div key={type.type.name}>
                         <Chip
                           style={{ backgroundColor: color, margin: 4 }}
                           variant="outlined"
-                          size="small"
+                          size="medium"
                           label={capitalize(type.type.name)}
+                          icon={icon}
                         />
                       </div>
                     );

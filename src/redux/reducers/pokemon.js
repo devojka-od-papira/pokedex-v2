@@ -7,7 +7,6 @@ import {
 const initialState = {
   pokemonsData: [],
   pokemonDetail: null,
-  pokemonDetailLoading: false,
 };
 
 export default (state = initialState, action) => {
