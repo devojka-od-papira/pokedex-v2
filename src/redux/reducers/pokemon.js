@@ -6,7 +6,9 @@ import {
 
 const initialState = {
   pokemonsData: [],
+  pokemonDataLoading: false,
   pokemonDetail: null,
+  pokemonsDetailIsLoading: false,
 };
 
 export default (state = initialState, action) => {
@@ -14,22 +16,29 @@ export default (state = initialState, action) => {
     case FETCH_POKEMONS_REQEST:
       return {
         ...state,
+        pokemonDataLoading: true,
       };
     case FETCH_POKEMONS_SUCCESS:
       return {
         ...state,
         pokemonsData: action.payload.pokemonsData,
+        pokemonDataLoading: false,
+      };
+    case FETCH_POKEMONS_ERROR:
+      return {
+        ...state,
+        pokemonDataLoading: false,
       };
     case FETCH_POKEMON_DETAIL_REQEST:
       return {
         ...state,
-        pokemonDetailLoading: true,
+        pokemonDetailIsLoading: true,
       };
     case FETCH_POKEMON_DETAIL_SUCCESS:
       return {
         ...state,
         pokemonDetail: action.payload.pokemonDetail,
-        pokemonDetailLoading: false,
+        pokemonDetailIsLoading: false,
       };
     default:
       return state;

@@ -8,18 +8,15 @@ const useStyles = makeStyles({
     display: 'flex',
   },
   stat: {
-    marginLeft: '10%',
-    marginRight: '10%',
-    width: '80%',
+    width: '100%',
     height: 500,
     display: 'flax',
   },
-
 });
 
 const PokemonStats = ({ stats = [] }) => {
   const classes = useStyles();
-  console.log('stats', stats);
+
   return (
     <div className={classes.statsContainer}>
       <div className={classes.stat}>

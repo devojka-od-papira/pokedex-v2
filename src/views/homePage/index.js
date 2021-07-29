@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { makeStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import PokemonCard from '../../components/card';
 import SearchBar from '../../components/searchBar';
 import { fetchPokemons } from '../../redux/actions';
@@ -16,7 +17,7 @@ const useStyles = makeStyles({
 });
 
 function Home({
-  fetchPokemonsAction, pokemonsData,
+  fetchPokemonsAction, pokemonsData, pokemonDataLoading,
 }) {
   const classes = useStyles();
 
@@ -28,14 +29,14 @@ function Home({
     <div>
       <SearchBar />
       <div className={classes.conteiner}>
-        {pokemonsData.map((pokemon) => (
+        {pokemonDataLoading ? <CircularProgress style={{ display: 'flex', alignSelf: 'center' }} /> : pokemonsData.map((pokemon) => (
           <PokemonCard
             key={pokemon.name}
             pokemonsData={pokemonsData}
             name={pokemon.name}
             url={pokemon.url}
           />
-        ))}
+        )) }
       </div>
     </div>
   );
@@ -43,6 +44,7 @@ function Home({
 function mapStateToProps(state) {
   return {
     pokemonsData: state.pokemon.pokemonsData,
+    pokemonDataLoading: state.pokemon.pokemonDataLoading,
   };
 }
 

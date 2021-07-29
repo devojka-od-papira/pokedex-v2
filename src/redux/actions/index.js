@@ -43,12 +43,14 @@ export const fetchPokemonDetailAction = (id) => async (dispatch) => {
 
     const newData = { ...data, stats: newStats };
 
-    dispatch({
-      type: FETCH_POKEMON_DETAIL_SUCCESS,
-      payload: {
-        pokemonDetail: newData,
-      },
-    });
+    setTimeout(() => {
+      dispatch({
+        type: FETCH_POKEMON_DETAIL_SUCCESS,
+        payload: {
+          pokemonDetail: newData,
+        },
+      });
+    }, 3000);
   } catch (error) {
     dispatch({
       type: FETCH_POKEMON_DETAIL_ERROR,

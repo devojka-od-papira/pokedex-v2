@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import { CardMedia, Typography, Card } from '@material-ui/core';
+import {
+  CardMedia, Typography, Card, CircularProgressss, CircularProgress,
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Chip from '@material-ui/core/Chip';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -67,10 +69,15 @@ function PokemonCard({ name, url }) {
   const classes = useStyles();
 
   const [pokemon, setPokemon] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     fetchPokemon(url).then((res) => {
       setPokemon(res);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 3000);
     });
   }, []);
 
@@ -119,7 +126,9 @@ function PokemonCard({ name, url }) {
       };
     }
     if (type === 'ground') {
-      return '#996600';
+      return {
+        color: '#996600',
+      };
     }
     if (type === 'psychic') {
       return '#ff0066';
@@ -154,60 +163,61 @@ function PokemonCard({ name, url }) {
       <Link to={`/detail/${pokemon.id}`}>
         <Card className={classes.wrap}>
           <CardActionArea className={classes.areaCard}>
-            <div>
-              <Typography className={classes.name}>{capitalize(name)}</Typography>
-              <CardMedia className={classes.image}>
-                <img src={pokemon?.sprites?.front_shiny} alt="pokemon" />
-              </CardMedia>
+            {isLoading ? <CircularProgress /> : (
               <div>
-                <div className={classes.chip}>
-                  <p className={classes.parag}>
-                    Type :
-                  </p>
-                  {pokemon?.types.map((type) => {
-                    const { color, icon } = chipColor(type.type.name);
-                    return (
-                      <div key={type.type.name}>
-                        <Chip
-                          style={{ backgroundColor: color, margin: 4 }}
-                          variant="outlined"
-                          size="medium"
-                          label={capitalize(type.type.name)}
-                          icon={icon}
-                        />
-                      </div>
-                    );
-                  })}
-                </div>
+                <Typography className={classes.name}>{capitalize(name)}</Typography>
+                <CardMedia className={classes.image}>
+                  <img src={pokemon?.sprites?.front_shiny} alt="pokemon" />
+                </CardMedia>
+                <div>
+                  <div className={classes.chip}>
+                    <p className={classes.parag}>
+                      Type :
+                    </p>
+                    {pokemon?.types.map((type) => {
+                      const { color, icon } = chipColor(type.type.name);
+                      return (
+                        <div key={type.type.name}>
+                          <Chip
+                            style={{ backgroundColor: color, margin: 4 }}
+                            variant="outlined"
+                            size="medium"
+                            label={capitalize(type.type.name)}
+                            icon={icon}
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
 
-                <div className={classes.chip}>
-                  <p className={classes.parag}>
-                    Weight :
-                  </p>
-                  <Chip
-                    style={{ backgroundColor: '#e0ebeb' }}
-                    variant="outlined"
-                    size="small"
-                    label={`${Math.round(pokemon?.weight * 0.1)} kg`}
-                  />
-                </div>
-                <div className={classes.chip}>
-                  <p className={classes.parag}>
-                    Height :
-                  </p>
-                  <Chip
-                    style={{ backgroundColor: '#e0ebeb' }}
-                    variant="outlined"
-                    size="small"
-                    label={`${pokemon?.height * 10} cm`}
-                  />
+                  <div className={classes.chip}>
+                    <p className={classes.parag}>
+                      Weight :
+                    </p>
+                    <Chip
+                      style={{ backgroundColor: '#e0ebeb' }}
+                      variant="outlined"
+                      size="small"
+                      label={`${Math.round(pokemon?.weight * 0.1)} kg`}
+                    />
+                  </div>
+                  <div className={classes.chip}>
+                    <p className={classes.parag}>
+                      Height :
+                    </p>
+                    <Chip
+                      style={{ backgroundColor: '#e0ebeb' }}
+                      variant="outlined"
+                      size="small"
+                      label={`${pokemon?.height * 10} cm`}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </CardActionArea>
         </Card>
       </Link>
-
     </>
   ) : null;
 }
