@@ -29,7 +29,9 @@ const useStyles = makeStyles({
     lineHeight: 2,
   },
   container: {
-    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

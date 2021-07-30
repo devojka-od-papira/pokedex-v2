@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import InputBase from '@material-ui/core/InputBase';
@@ -36,11 +36,11 @@ const useStyles = makeStyles((theme) => ({
   },
   inputRoot: {
     color: 'inherit',
-    width: '100%',
+    width: '400px',
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(16)}px)`,
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('md')]: {
@@ -74,6 +74,11 @@ const useStyles = makeStyles((theme) => ({
 
 function SearchBar() {
   const classes = useStyles();
+  const [searchValue, setSearchValue] = useState('');
+
+  function handleChange(event) {
+    setSearchValue(event.target.value);
+  }
 
   return (
     <div>
@@ -86,6 +91,7 @@ function SearchBar() {
             <form className={classes.form}>
               <InputBase
                 placeholder="Search…"
+                onChange={handleChange}
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput,

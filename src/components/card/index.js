@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import {
-  CardMedia, Typography, Card, CircularProgressss, CircularProgress,
+  CardMedia, Typography, Card, CircularProgress,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Chip from '@material-ui/core/Chip';
@@ -29,7 +29,6 @@ const useStyles = makeStyles({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'start',
-
   },
   parag: {
     marginRight: 5,
@@ -56,7 +55,6 @@ const useStyles = makeStyles({
   button: {
     position: 'absolute',
     right: 0,
-
     marginRight: 10,
     marginBottom: 10,
     borderRadius: 50,
@@ -75,9 +73,7 @@ function PokemonCard({ name, url }) {
     setIsLoading(true);
     fetchPokemon(url).then((res) => {
       setPokemon(res);
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 3000);
+      setIsLoading(false);
     });
   }, []);
 
@@ -148,11 +144,9 @@ function PokemonCard({ name, url }) {
       return '#663300';
     } if (type === 'bug') {
       return '#99ddff';
-    }
-    if (type === 'steel') {
+    } if (type === 'steel') {
       return ' #e6ccff';
-    }
-    if (type === 'fairy') {
+    } if (type === 'fairy') {
       return '#ffcce6';
     }
     return '';
@@ -189,7 +183,6 @@ function PokemonCard({ name, url }) {
                       );
                     })}
                   </div>
-
                   <div className={classes.chip}>
                     <p className={classes.parag}>
                       Weight :

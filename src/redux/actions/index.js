@@ -34,7 +34,7 @@ export const fetchPokemonDetailAction = (id) => async (dispatch) => {
     const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
 
     const newStats = data.stats.map((value) => ({
-      ...value, // sve ostalo isto samo mi dodaj ili prepisi ove stavke dole navedene
+      ...value,
       id: capitalize(value.stat.name),
       label: capitalize(value.stat.name),
       value: value.base_stat,
