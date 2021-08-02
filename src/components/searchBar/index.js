@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -72,12 +73,20 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-function SearchBar() {
+function SearchBar({ pokemonsData, filterPokemons, setFilteredPokemonActive }) {
   const classes = useStyles();
-  const [searchValue, setSearchValue] = useState('');
 
+  console.log('pokemoni', pokemonsData);
   function handleChange(event) {
-    setSearchValue(event.target.value);
+    console.log('eventTarget', event.target.value.length);
+    if (event.target.value.length !== 0) {
+      setFilteredPokemonActive(true);
+    } else {
+      setFilteredPokemonActive(false);
+    }
+    const filteredPokemons = pokemonsData.filter((pokemon) => pokemon.name.includes(event.target.value));
+    console.log('filtered', filteredPokemons);
+    filterPokemons(filteredPokemons);
   }
 
   return (

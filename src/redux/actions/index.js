@@ -6,6 +6,7 @@ import {
   FETCH_POKEMON_DETAIL_REQEST,
   FETCH_POKEMON_DETAIL_SUCCESS,
   FETCH_POKEMON_DETAIL_ERROR,
+  FILTER_POKEMONS,
 } from '../actionTypes';
 import { capitalize } from '../../utils';
 
@@ -14,12 +15,14 @@ export const fetchPokemons = () => async (dispatch) => {
 
   try {
     const { data } = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=50&offset=100');
-    dispatch({
-      type: FETCH_POKEMONS_SUCCESS,
-      payload: {
-        pokemonsData: data.results,
-      },
-    });
+    setTimeout(() => {
+      dispatch({
+        type: FETCH_POKEMONS_SUCCESS,
+        payload: {
+          pokemonsData: data.results,
+        },
+      });
+    }, 3000);
   } catch (error) {
     dispatch({
       type: FETCH_POKEMONS_ERROR,
@@ -56,4 +59,13 @@ export const fetchPokemonDetailAction = (id) => async (dispatch) => {
       type: FETCH_POKEMON_DETAIL_ERROR,
     });
   }
+};
+
+export const filterPokemonsAction = (filteredPokemons) => (dispatch) => {
+  dispatch({
+    type: FILTER_POKEMONS,
+    payload: {
+      filteredPokemons,
+    },
+  });
 };

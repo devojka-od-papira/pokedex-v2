@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import PokemonCard from '../../components/card';
 import SearchBar from '../../components/searchBar';
-import { fetchPokemons } from '../../redux/actions';
+import { fetchPokemons, filterPokemonsAction } from '../../redux/actions';
 
 const useStyles = makeStyles({
   conteiner: {
@@ -14,29 +14,56 @@ const useStyles = makeStyles({
     justifyContent: 'center',
 
   },
+  loadingContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100vh',
+  },
 });
 
 function Home({
-  fetchPokemonsAction, pokemonsData, pokemonDataLoading,
+  fetchPokemonsAction, pokemonsData, pokemonDataLoading, filterPokemons, filteredPokemons,
 }) {
   const classes = useStyles();
+  const [filteredPokemonsActive, setFilteredPokemonActive] = useState(false);
+  console.log('filteredPokem', filteredPokemonsActive);
 
   useEffect(() => {
     fetchPokemonsAction();
   }, []);
 
+  if (pokemonDataLoading === true) {
+    return (
+      <div className={classes.loadingContainer}>
+        <CircularProgress />
+      </div>
+    );
+  }
+
   return (
     <div>
-      <SearchBar />
+      <SearchBar
+        setFilteredPokemonActive={setFilteredPokemonActive}
+        filterPokemons={filterPokemons}
+        pokemonsData={pokemonsData}
+      />
       <div className={classes.conteiner}>
-        {pokemonDataLoading ? <CircularProgress style={{ display: 'flex', alignSelf: 'center' }} /> : pokemonsData.map((pokemon) => (
+        {filteredPokemonsActive ? filteredPokemons.map((pokemon) => (
           <PokemonCard
             key={pokemon.name}
             pokemonsData={pokemonsData}
             name={pokemon.name}
             url={pokemon.url}
           />
-        )) }
+        )) : pokemonsData.map((pokemon) => (
+          <PokemonCard
+            key={pokemon.name}
+            pokemonsData={pokemonsData}
+            name={pokemon.name}
+            url={pokemon.url}
+          />
+        ))}
       </div>
     </div>
   );
@@ -45,12 +72,14 @@ function mapStateToProps(state) {
   return {
     pokemonsData: state.pokemon.pokemonsData,
     pokemonDataLoading: state.pokemon.pokemonDataLoading,
+    filteredPokemons: state.pokemon.filteredPokemons,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     fetchPokemonsAction: bindActionCreators(fetchPokemons, dispatch),
+    filterPokemons: bindActionCreators(filterPokemonsAction, dispatch),
   };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

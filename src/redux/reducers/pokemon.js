@@ -2,6 +2,8 @@ import {
   FETCH_POKEMONS_REQEST, FETCH_POKEMONS_SUCCESS, FETCH_POKEMONS_ERROR, FETCH_POKEMON_DETAIL_REQEST,
   FETCH_POKEMON_DETAIL_SUCCESS,
   FETCH_POKEMON_DETAIL_ERROR,
+  FILTER_POKEMONS,
+
 } from '../actionTypes';
 
 const initialState = {
@@ -9,6 +11,7 @@ const initialState = {
   pokemonDataLoading: false,
   pokemonDetail: null,
   pokemonsDetailIsLoading: false,
+  filteredPokemons: [],
 };
 
 export default (state = initialState, action) => {
@@ -39,6 +42,16 @@ export default (state = initialState, action) => {
         ...state,
         pokemonDetail: action.payload.pokemonDetail,
         pokemonDetailIsLoading: false,
+      };
+    case FETCH_POKEMON_DETAIL_ERROR:
+      return {
+        ...state,
+        pokemonDataLoading: false,
+      };
+    case FILTER_POKEMONS:
+      return {
+        ...state,
+        filteredPokemons: action.payload.filteredPokemons,
       };
     default:
       return state;
