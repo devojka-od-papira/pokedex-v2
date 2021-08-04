@@ -8,7 +8,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Chip from '@material-ui/core/Chip';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faTint, faGhost, faBolt, faFire, faHandRock,
+  faTint, faStar, faBolt, faFire, faHandRock,
+  faFeatherAlt, faLeaf, faSkull, faGlobeEurope,
+  faBrain, faDiceD20, faSnowflake, faBug, faDragon,
+  faGhost, faAdjust, faDrumSteelpan, faHatWizard,
 } from '@fortawesome/free-solid-svg-icons';
 import { fetchPokemon } from '../../services/pokemon';
 import { capitalize } from '../../utils';
@@ -81,7 +84,7 @@ function PokemonCard({ name, url }) {
     if (type === 'normal') {
       return {
         color: '#a3a375',
-        icon: <FontAwesomeIcon icon={faGhost} />,
+        icon: <FontAwesomeIcon icon={faStar} />,
       };
     } if (type === 'water') {
       return {
@@ -109,45 +112,74 @@ function PokemonCard({ name, url }) {
     if (type === 'flying') {
       return {
         color: '#d9b3ff',
+        icon: <FontAwesomeIcon icon={faFeatherAlt} />,
       };
     }
     if (type === 'grass') {
       return {
         color: '#33ff33',
+        icon: <FontAwesomeIcon icon={faLeaf} />,
       };
     }
     if (type === 'poison') {
       return {
         color: '#9900cc',
+        icon: <FontAwesomeIcon icon={faSkull} />,
       };
     }
     if (type === 'ground') {
       return {
         color: '#996600',
+        icon: <FontAwesomeIcon icon={faGlobeEurope} />,
       };
     }
     if (type === 'psychic') {
-      return '#ff0066';
+      return {
+        color: '#ff0066',
+        icon: <FontAwesomeIcon icon={faBrain} />,
+      };
     } if (type === 'rock') {
-      return '#558000';
+      return {
+        color: '#558000',
+        icon: <FontAwesomeIcon icon={faDiceD20} />,
+      };
     } if (type === 'ice') {
-      return '#99ddff';
+      return {
+        color: '#99ddff',
+        icon: <FontAwesomeIcon icon={faSnowflake} />,
+      };
     }
     if (type === 'bug') {
-      return ' #99e600';
+      return {
+        color: '#99e600',
+        icon: <FontAwesomeIcon icon={faBug} />,
+      };
     }
     if (type === 'dragon') {
-      return '#6600cc';
+      return {
+        color: '#6600cc',
+        icon: <FontAwesomeIcon icon={faDragon} />,
+      };
     } if (type === 'ghost') {
-      return ' #800040';
+      return {
+        color: ' #800040',
+        icon: <FontAwesomeIcon icon={faGhost} />,
+      };
     } if (type === 'dark') {
-      return '#663300';
-    } if (type === 'bug') {
-      return '#99ddff';
+      return {
+        color: '#663300',
+        icon: <FontAwesomeIcon icon={faAdjust} />,
+      };
     } if (type === 'steel') {
-      return ' #e6ccff';
+      return {
+        color: '#e6ccff',
+        icon: <FontAwesomeIcon icon={faDrumSteelpan} />,
+      };
     } if (type === 'fairy') {
-      return '#ffcce6';
+      return {
+        color: '#ffcce6',
+        icon: <FontAwesomeIcon icon={faHatWizard} />,
+      };
     }
     return '';
   };
