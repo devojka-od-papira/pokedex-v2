@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { makeStyles } from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles, CircularProgress } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import PokemonCard from '../../components/card';
 import SearchBar from '../../components/searchBar';
 import { fetchPokemons, filterPokemonsAction } from '../../redux/actions';
@@ -64,6 +64,7 @@ function Home({
             url={pokemon.url}
           />
         ))}
+        {filteredPokemons.length === 0 && filteredPokemonsActive === true && <Alert severity="error">This is a warning alert — pokemon in not found!</Alert>}
       </div>
     </div>
   );

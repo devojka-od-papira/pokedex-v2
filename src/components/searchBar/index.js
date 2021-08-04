@@ -1,13 +1,11 @@
 /* eslint-disable max-len */
-import React, { useState } from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import InputBase from '@material-ui/core/InputBase';
+import React from 'react';
 import SearchIcon from '@material-ui/icons/Search';
-import { alpha, makeStyles } from '@material-ui/core/styles';
+import {
+  alpha, makeStyles, AppBar, Toolbar, InputBase, Button,
+} from '@material-ui/core';
 import { Icon } from '@iconify/react';
 import pokeballIcon from '@iconify/icons-mdi/pokeball';
-import { Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   search: {

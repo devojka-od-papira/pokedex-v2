@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
-import { makeStyles } from '@material-ui/core/styles';
 import {
-  Typography, TableCell, TableContainer, Table, TableRow, TableBody, TableHead, CircularProgress,
+  Typography, TableCell, TableContainer, Table, TableRow,
+  TableBody, TableHead, CircularProgress, makeStyles,
 } from '@material-ui/core';
 import { fetchPokemonDetailAction } from '../../redux/actions';
 import { capitalize } from '../../utils';

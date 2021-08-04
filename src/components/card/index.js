@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import CardActionArea from '@material-ui/core/CardActionArea';
 import {
-  CardMedia, Typography, Card, CircularProgress,
+  CardMedia,
+  CardActionArea,
+  Typography,
+  Chip,
+  Card,
+  CircularProgress,
+  makeStyles,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import Chip from '@material-ui/core/Chip';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faTint, faStar, faBolt, faFire, faHandRock,
-  faFeatherAlt, faLeaf, faSkull, faGlobeEurope,
-  faBrain, faDiceD20, faSnowflake, faBug, faDragon,
-  faGhost, faAdjust, faDrumSteelpan, faHatWizard,
-} from '@fortawesome/free-solid-svg-icons';
 import { fetchPokemon } from '../../services/pokemon';
 import { capitalize } from '../../utils';
+import Chips from '../chip';
 
 const useStyles = makeStyles({
   wrap: {
@@ -62,7 +59,6 @@ const useStyles = makeStyles({
     marginBottom: 10,
     borderRadius: 50,
     textTransform: 'none',
-
   },
 });
 
@@ -80,110 +76,6 @@ function PokemonCard({ name, url }) {
     });
   }, []);
 
-  const chipColor = (type) => {
-    if (type === 'normal') {
-      return {
-        color: '#a3a375',
-        icon: <FontAwesomeIcon icon={faStar} />,
-      };
-    } if (type === 'water') {
-      return {
-        color: '#668cff',
-        icon: <FontAwesomeIcon icon={faTint} />,
-      };
-    } if (type === 'electric') {
-      return {
-        color: '#ffdb4d',
-        icon: <FontAwesomeIcon icon={faBolt} />,
-      };
-    }
-    if (type === 'fire') {
-      return {
-        color: '#ff9933',
-        icon: <FontAwesomeIcon icon={faFire} />,
-      };
-    }
-    if (type === 'fighting') {
-      return {
-        color: '#ff1a1a',
-        icon: <FontAwesomeIcon icon={faHandRock} />,
-      };
-    }
-    if (type === 'flying') {
-      return {
-        color: '#d9b3ff',
-        icon: <FontAwesomeIcon icon={faFeatherAlt} />,
-      };
-    }
-    if (type === 'grass') {
-      return {
-        color: '#33ff33',
-        icon: <FontAwesomeIcon icon={faLeaf} />,
-      };
-    }
-    if (type === 'poison') {
-      return {
-        color: '#9900cc',
-        icon: <FontAwesomeIcon icon={faSkull} />,
-      };
-    }
-    if (type === 'ground') {
-      return {
-        color: '#996600',
-        icon: <FontAwesomeIcon icon={faGlobeEurope} />,
-      };
-    }
-    if (type === 'psychic') {
-      return {
-        color: '#ff0066',
-        icon: <FontAwesomeIcon icon={faBrain} />,
-      };
-    } if (type === 'rock') {
-      return {
-        color: '#558000',
-        icon: <FontAwesomeIcon icon={faDiceD20} />,
-      };
-    } if (type === 'ice') {
-      return {
-        color: '#99ddff',
-        icon: <FontAwesomeIcon icon={faSnowflake} />,
-      };
-    }
-    if (type === 'bug') {
-      return {
-        color: '#99e600',
-        icon: <FontAwesomeIcon icon={faBug} />,
-      };
-    }
-    if (type === 'dragon') {
-      return {
-        color: '#6600cc',
-        icon: <FontAwesomeIcon icon={faDragon} />,
-      };
-    } if (type === 'ghost') {
-      return {
-        color: ' #800040',
-        icon: <FontAwesomeIcon icon={faGhost} />,
-      };
-    } if (type === 'dark') {
-      return {
-        color: '#663300',
-        icon: <FontAwesomeIcon icon={faAdjust} />,
-      };
-    } if (type === 'steel') {
-      return {
-        color: '#e6ccff',
-        icon: <FontAwesomeIcon icon={faDrumSteelpan} />,
-      };
-    } if (type === 'fairy') {
-      return {
-        color: '#ffcce6',
-        icon: <FontAwesomeIcon icon={faHatWizard} />,
-      };
-    }
-    return '';
-  };
-
   return pokemon ? (
     <>
       <Link to={`/detail/${pokemon.id}`}>
@@ -200,20 +92,14 @@ function PokemonCard({ name, url }) {
                     <p className={classes.parag}>
                       Type :
                     </p>
-                    {pokemon?.types.map((type) => {
-                      const { color, icon } = chipColor(type.type.name);
-                      return (
-                        <div key={type.type.name}>
-                          <Chip
-                            style={{ backgroundColor: color, margin: 4 }}
-                            variant="outlined"
-                            size="medium"
-                            label={capitalize(type.type.name)}
-                            icon={icon}
-                          />
-                        </div>
-                      );
-                    })}
+                    {pokemon?.types.map((type) => (
+                      <div key={type.type.name}>
+                        <Chips
+                          pokemonType={type.type.name}
+                          label={capitalize(type.type.name)}
+                        />
+                      </div>
+                    ))}
                   </div>
                   <div className={classes.chip}>
                     <p className={classes.parag}>
